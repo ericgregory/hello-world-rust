@@ -1,6 +1,6 @@
 name: Build Wasm component from Rust and push to OCI registry
 
-on: [push]
+on: [release]
 
 jobs:
   publish:
@@ -17,7 +17,7 @@ jobs:
        with:
          wash-version: latest
 
-     - name: Install Rust target
+     - name: Install wasm32-wasip2 target for Rust
        run: |
           rustup target add wasm32-wasip2
 
@@ -25,7 +25,7 @@ jobs:
        run: |
           wash build
 
-     - name: Get binary filename
+     - name: Get Wasm binary filename
        run: |
           WASM_FILENAME="$(basename ./target/wasm32-wasip2/debug/*.wasm .wasm)"
           echo "GITHUB_WASM_FILENAME=${WASM_FILENAME}" >>${GITHUB_ENV}
@@ -49,4 +49,4 @@ jobs:
      - name: Push Wasm component to ghcr.io
        working-directory: ./target/wasm32-wasip2/debug/
        run: |
-          wash oci push ghcr.io/${{ env.GHCR_REPO_NAMESPACE }}/components/${{ env.GHCR_REPO_NAME }} ./${{ env.GITHUB_WASM_FILENAME }}.wasm
+          wash oci push ghcr.io/${{ env.GHCR_REPO_NAMESPACE }}/components/${{ env.GHCR_REPO_NAME }}:${{ github.ref_name }} ./${{ env.GITHUB_WASM_FILENAME }}.wasm
