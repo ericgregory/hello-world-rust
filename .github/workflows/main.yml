@@ -57,7 +57,7 @@ jobs:
        run: |
           DEPLOYMENT_FILE="manifests/component.yaml"
           OLD_IMAGE=$(grep "image:" "$DEPLOYMENT_FILE" | awk '{print $2}')
-          NEW_IMAGE="ghcr.io/${{ env.GHCR_REPO_NAMESPACE }}/components/${{ env.GHCR_REPO_NAME }}:${{ github.ref_name }}
+          NEW_IMAGE="ghcr.io/${{ env.GHCR_REPO_NAMESPACE }}/components/${{ env.GHCR_REPO_NAME }}:${{ github.ref_name }}"
 
           # Update the image tag
           sed -i "s|image:.*|image: $NEW_IMAGE|" "$DEPLOYMENT_FILE"
