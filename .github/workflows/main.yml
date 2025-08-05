@@ -23,8 +23,15 @@ jobs:
        run: |
           rustup target add wasm32-wasip2
 
-     - name: Checkout main
+     - name: Checkout repository
+       uses: actions/checkout@v4
+       with:
+        repository: ${{ github.repository_owner }}/${{ github.event.repository.name }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+     - name: Fetch repository content
        run: |
+          git fetch origin
           git checkout main
 
      - name: Compile Wasm binary
