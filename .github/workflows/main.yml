@@ -1,6 +1,8 @@
 name: Build Wasm component from Rust and push to OCI registry
 
-on: [release]
+on: 
+  release:
+    types: [published]
 
 jobs:
   publish:
@@ -60,13 +62,10 @@ jobs:
           # Update the image tag
           sed -i "s|image:.*|image: $NEW_IMAGE|" "$DEPLOYMENT_FILE"
 
-          # Create commit message
-          echo "Update image: $OLD_IMAGE -> $NEW_IMAGE" > commit_message.txt
-
      - name: Commit and push manifest update
        run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
           git add manifests/component.yaml
-          git commit -F commit_message.txt
+          git commit -m "Update image tag in manifest: $OLD_IMAGE -> $NEW_IMAGE"
           git push
