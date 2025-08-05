@@ -8,7 +8,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
     
     steps:
@@ -73,7 +73,7 @@ jobs:
           # Update the image tag
           sed -i "s|image:.*|image: $NEW_IMAGE|" "$DEPLOYMENT_FILE"
 
-     - name: Commit and push manifest update
+     - name: Commit manifest update
        run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
