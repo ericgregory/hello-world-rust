@@ -3,7 +3,7 @@ kind: Component
 metadata:
   name: hello-world-rust
 spec:
-  image: ghcr.io/ericgregory/components/hello-world-rust:1.0.0
+  image: ghcr.io/ericgregory/components/hello-world-rust:1.1.5
   concurrency: 100
   replicas: 1
   hostSelector:
